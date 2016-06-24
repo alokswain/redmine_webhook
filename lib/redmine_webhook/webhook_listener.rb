@@ -16,7 +16,6 @@ module RedmineWebhook
       issue = context[:issue]
       project = issue.project
       webhook = Webhook.where(:project_id => project.project.id).first
-      binding.pry
       return unless webhook
       if webhook.custom_field_name
         return if webhook.value_for_trigger.nil? || webhook.value_for_trigger == ""
