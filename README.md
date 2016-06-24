@@ -2,6 +2,13 @@ Redmine WebHook Plugin
 ======================
 
 A Redmine plugin posts webhook on creating and updating tickets.
+===
+In this fork the following things have been added for a custom requirement.
+1. Can chose a custom field for a weebhook. (type boolean)
+2. If webhook's custom field is set and its value is set to true/false then the webhook will fire when
+    the actual value of the custom field equals the one specified in the webhook.
+    If custom field is configured and the value is nil then dont send webhook.
+3. If webhook's custom field is not set then use webhook as usual.
 
 Author
 ------------------------------
@@ -12,7 +19,7 @@ Install
 Type below commands:
 
     $ cd $RAILS_ROOT/plugins
-    $ git clone git://github.com/suer/redmine_webhook.git
+    $ git clone git://github.com/alokswain/redmine_webhook.git
     $ rake redmine:plugins:migrate RAILS_ENV=production
 
 Then, restart your redmine.
