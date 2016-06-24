@@ -16,7 +16,17 @@ module RedmineWebhook
       issue = context[:issue]
       project = issue.project
       webhook = Webhook.where(:project_id => project.project.id).first
+      binding.pry
       return unless webhook
+      if webhook.custom_field_name
+        return if webhook.value_for_trigger.nil? || webhook.value_for_trigger == ""
+
+        custom_field = project.issue_custom_fields.where(:name => webhook.custom_field_name).last
+        custom_field_value = custom_field.custom_values.last
+        cf_value = custom_field_value.value == "1" ? true : custom_field_value.value == "0" ? false : nil
+        ## Ignore all other values here. # strings are not taken care of for now.
+        return if webhook.value_for_trigger != cf_value
+      end
       post(webhook, journal_to_json(issue, journal, controller))
     end
 

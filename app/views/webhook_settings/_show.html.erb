@@ -1,10 +1,20 @@
 <% webhook = Webhook.where(:project_id => @project.id).first || Webhook.new(:project_id => @project.id) %>
 <%= form_tag(update_webhook_settings_path(@project), :method => :put, :class => "tabular") do %>
 <div class="box tabular">
-<p>
-  <label>URL</label>
-  <%= text_field_tag :url, webhook.url, :size => 80 %>
-</p>
+	<p>
+		<label>URL</label>
+		<%= text_field_tag :url, webhook.url, :size => 80 %>
+	</p>
+	<p>
+		<label>Track Issue Custom Field</label>
+		<% select_options = @project.issue_custom_fields.map{|cf| [cf.name, cf.name]} %>
+		<%= select_tag :custom_field_name, options_for_select(select_options, webhook.custom_field_name),
+		 :include_blank => true %>
+	</p>
+	<p>
+		<label>Tracking Value(boolean only, any other type will be ignored !!)</label>
+		<%= select_tag :value_for_trigger, options_for_select([["True", true], ["False", false]], webhook.value_for_trigger), :include_blank => true %>
+	</p>
 </div>
 
 <%= submit_tag l(:button_save) %>

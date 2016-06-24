@@ -4,6 +4,8 @@ class WebhookSettingsController < ApplicationController
   def update
     webhook = Webhook.where(:project_id => @project.id).first_or_create
     webhook.url = params[:url]
+    webhook.custom_field_name = params[:custom_field_name]
+    webhook.value_for_trigger = params[:value_for_trigger]
     if webhook.save
       flash[:notice] = l(:notice_successful_update)
     else
