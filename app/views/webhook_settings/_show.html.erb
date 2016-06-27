@@ -8,12 +8,13 @@
 	<p>
 		<label>Track Issue Custom Field</label>
 		<% select_options = @project.issue_custom_fields.map{|cf| [cf.name, cf.name]} %>
-		<%= select_tag :custom_field_name, options_for_select(select_options, webhook.custom_field_name),
+		<%= select_tag :custom_field_name, options_for_select(select_options, webhook.try(:custom_field_name)),
 		 :include_blank => true %>
 	</p>
 	<p>
 		<label>Tracking Value(boolean only, any other type will be ignored !!)</label>
-		<%= select_tag :value_for_trigger, options_for_select([["True", true], ["False", false]], webhook.value_for_trigger), :include_blank => true %>
+		<%= select_tag :value_for_trigger, options_for_select([["True", true], ["False", false]], 
+			webhook.try(:value_for_trigger)), :include_blank => true %>
 	</p>
 </div>
 
